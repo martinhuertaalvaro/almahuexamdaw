@@ -1,0 +1,17 @@
+# Usa una imagen base que incluya el servidor web y PHP (por ejemplo, php:apache)
+FROM php:apache
+
+# Copia el contenido de tu directorio de desarrollo al directorio del servidor web en el contenedor
+COPY . /var/www/html
+
+# Expone el puerto 80
+EXPOSE 80
+
+# Dependencia del servicio de base de datos
+RUN docker-php-ext-install pdo_mysql && docker-php-ext-enable pdo_mysql
+
+# Establece el nombre del contenedor
+LABEL maintainer="alvaro.web"
+
+# Comando para iniciar el servidor web
+CMD ["apache2-foreground"]

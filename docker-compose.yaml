@@ -1,0 +1,41 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: web
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
+
+  database:
+    build:
+      context: .
+      dockerfile: Dockerfile.database
+    container_name: database
+    ports: 
+        - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password 
+    environment:
+        MYSQL_DATABASE: martinhuertaalvaro
+        MYSQL_PASSWORD: root
+        MYSQL_ROOT_PASSWORD: root
+    volumes:
+        - ./db:/docker-entrypoint-initdb.d
+    networks:
+        - default
+  adminphp:
+    build:
+      context: .
+      dockerfile: Dockerfile.adminphp
+    container_name: adminphp
+    ports:
+      - "8000:80"
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root

@@ -1,0 +1,13 @@
+
+FROM phpmyadmin/phpmyadmin
+
+# Variables de entorno para configurar phpMyAdmin
+ENV PMA_HOST database
+ENV PMA_PORT 3306
+ENV MYSQL_ROOT_PASSWORD root
+
+# Expose phpMyAdmin port
+EXPOSE 80
+
+# Establece el nombre del contenedor
+LABEL maintainer="alvaro.adminphp"
