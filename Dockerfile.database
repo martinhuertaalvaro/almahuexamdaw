@@ -1,0 +1,17 @@
+
+FROM mysql:latest
+
+# Variables de entorno para configurar la base de datos
+ENV MYSQL_ROOT_PASSWORD root
+ENV MYSQL_DATABASE martinhuertaalvaro
+ENV MYSQL_USER alvaro
+ENV MYSQL_PASSWORD root
+
+# Expose MySQL port
+EXPOSE 3306
+
+# Copia el script de inicialización de la base de datos
+COPY ./db/init.sql /docker-entrypoint-initdb.d/
+
+# Establece el nombre del contenedor
+LABEL maintainer="alvaro.database"
